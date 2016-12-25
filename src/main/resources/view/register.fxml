@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:controller="controller.RegisterController" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="359.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="73.0" layoutY="14.0" prefHeight="31.0" prefWidth="155.0" text="All fields are required" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <VBox layoutX="9.0" layoutY="61.0" spacing="28.0">
+         <children>
+            <Label text="Login (e-mail):" />
+            <Label text="Full name:" />
+            <Label text="Password:" />
+            <Label text="Confirm pass:" />
+         </children>
+      </VBox>
+      <VBox layoutX="95.0" layoutY="57.0" spacing="20.0">
+         <children>
+            <TextField fx:id="loginField"/>
+            <TextField fx:id="nameField"/>
+            <PasswordField fx:id="passwordField"/>
+            <PasswordField fx:id="confirmPasswordField"/>
+         </children>
+      </VBox>
+      <Button onAction="#handleSubmitButton" defaultButton="true" layoutX="228.0" layoutY="320.0" mnemonicParsing="false" text="Register" />
+      <Button onAction="#handleCancelButton" cancelButton="true" layoutX="14.0" layoutY="320.0" mnemonicParsing="false" text="Cancel" />
+      <VBox layoutX="18.0" layoutY="240.0" spacing="10.0">
+         <children>
+            <CheckBox fx:id="ownerCheck" mnemonicParsing="false" text="Register as a hotel owner" />
+            <CheckBox fx:id="agreeCheck" mnemonicParsing="false" text="I accept agreement" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
