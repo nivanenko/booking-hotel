@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -45,15 +46,15 @@
                                         <TextField fx:id="guestField" prefHeight="25.0" prefWidth="118.0" />
                                     </children>
                                 </VBox>
-                                <Button fx:id="searchButton" onAction="#handleSearchButton" defaultButton="true" layoutX="164.0" layoutY="277.0" mnemonicParsing="false" text="Search" />
+                                <Button defaultButton="true" layoutX="164.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleSearchButton" text="Search" />
                                 <TableView fx:id="hotelTable" layoutX="223.0" layoutY="-2.0" prefHeight="316.0" prefWidth="380.0">
                                     <columns>
-                                        <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
-                                        <TableColumn fx:id="descColumn" prefWidth="76.0" text="Description" />
-                                        <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Price" />
+                                        <TableColumn fx:id="nameHotelColumn" prefWidth="75.0" text="Name" />
+                                        <TableColumn fx:id="descColumn" prefWidth="238.0" text="Description" />
+                                        <TableColumn fx:id="priceHotelColumn" minWidth="0.0" prefWidth="59.0" text="Price, €" />
                                     </columns>
                                 </TableView>
-                                <Button fx:id="clearButton" onAction="#handleClearButton" layoutX="15.0" layoutY="277.0" mnemonicParsing="false" text="Clear" />
+                                <Button layoutX="15.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleClearButton" text="Clear" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -62,24 +63,31 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TableView layoutY="50.0" prefHeight="265.0" prefWidth="600.0">
+                                <TableView fx:id="bookingTable" layoutY="50.0" prefHeight="265.0" prefWidth="600.0">
                                     <columns>
-                                        <TableColumn prefWidth="75.0" text="Hotel name" />
-                                        <TableColumn prefWidth="75.0" text="Dates" />
-                                        <TableColumn prefWidth="75.0" text="Price" />
+                                        <TableColumn fx:id="hotelBookNameColumn" prefWidth="131.0" text="Hotel name" />
+                                        <TableColumn fx:id="dateInColumn" prefWidth="78.0" text="Check in" />
+                                        <TableColumn fx:id="dateOutColumn" minWidth="4.0" prefWidth="111.0" text="Check out" />
+                                        <TableColumn fx:id="priceBookingColumn" prefWidth="65.0" text="Price, €" />
                                     </columns>
                                 </TableView>
-                                <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Refresh" />
+                                <HBox layoutX="14.0" layoutY="14.0" spacing="20.0">
+                                    <children>
+                                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleRefreshBookingButton" text="Refresh" />
+                                        <Button mnemonicParsing="false" onAction="#handleDiscardBookingButton" text="Discard selected" />
+                                    </children>
+                                </HBox>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
             </tabs>
         </TabPane>
-        <Button fx:id="signOutButton" layoutX="525.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSignOutButton" text="Sign out" />
+        <Button layoutX="525.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSignOutButton" text="Sign out" />
         <Label layoutX="251.0" layoutY="18.0" text="Booking hotel v0.1" />
         <Accordion layoutX="98.0" layoutY="-2.0" />
         <Label layoutX="14.0" layoutY="18.0" text="User:  " />
-        <Label fx:id="nameLabel" layoutX="47.0" layoutY="18.0" text="email" />
+        <Label fx:id="customerName" layoutX="47.0" layoutY="18.0" text="email" />
+      <Button layoutX="456.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCustomButton" text="Custom" />
     </children>
 </AnchorPane>

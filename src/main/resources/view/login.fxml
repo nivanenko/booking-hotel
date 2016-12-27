@@ -30,9 +30,9 @@
       </VBox>
       <HBox layoutX="14.0" layoutY="161.0" spacing="65.0">
          <children>
-            <Button fx:id="exitButton" cancelButton="true" mnemonicParsing="false" onAction="#handleExitButton" text="Exit" />
-            <Button fx:id="registerButton" mnemonicParsing="false" onAction="#handleRegisterButton" text="Register" />
-            <Button fx:id="submitButton" defaultButton="true" mnemonicParsing="false" onAction="#handleSubmitButton" text="Login" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#handleExitButton" text="Exit" />
+            <Button mnemonicParsing="false" onAction="#handleRegisterButton" text="Register" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSubmitButton" text="Login" />
          </children>
       </HBox>
    </children>

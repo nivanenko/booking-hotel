@@ -7,26 +7,30 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Room;
+import util.DataSourceUtil;
 
+import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private AnchorPane rootLayout;
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
+    private DataSource ds;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        ds = DataSourceUtil.getDataSource();
+
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Booking hotel");
 
-        showLoginPage();
+//        showLoginPage();
+        showCustomerPage("firstcustomer@gmail.com");
     }
+
 
     public void showLoginPage() {
         try {
@@ -38,6 +42,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+            primaryStage.setTitle("Login");
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -73,7 +78,7 @@ public class MainApp extends Application {
 
             CustomerController controller = loader.getController();
             controller.setMainApp(this);
-            controller.setNameLabel(name);
+            controller.setCustomerName(name);
 
             Scene scene = new Scene(mainPane);
             primaryStage.setTitle("Booking hotel");
@@ -86,7 +91,7 @@ public class MainApp extends Application {
         }
     }
 
-    public void showRoomPage(String hotelName, ArrayList<Room> rooms) {
+    public void showRoomPage(String hotelName, ArrayList<Room> rooms, Date dateIn, Date dateOut, String customer) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("view/room-view.fxml"));
@@ -95,7 +100,9 @@ public class MainApp extends Application {
             RoomController controller = loader.getController();
             controller.setMainApp(this);
             controller.setHotelLabel(hotelName);
-
+            controller.updateTable(rooms);
+            controller.setDates(dateIn, dateOut);
+            controller.setCustomerName(customer);
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Choose a room");
@@ -113,13 +120,13 @@ public class MainApp extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("view/main-owner.fxml"));
-            AnchorPane mainPane = loader.load();
+            AnchorPane mainOwnerPage = loader.load();
 
             OwnerController controller = loader.getController();
             controller.setMainApp(this);
-            controller.setNameLabel(name);
+            controller.setOwnerNameLabel(name);
 
-            Scene scene = new Scene(mainPane);
+            Scene scene = new Scene(mainOwnerPage);
             primaryStage.setTitle("Booking hotel");
             primaryStage.setResizable(false);
             primaryStage.setScene(scene);
@@ -134,7 +141,7 @@ public class MainApp extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("view/add-hotel.fxml"));
-            AnchorPane roomPane = loader.load();
+            AnchorPane addHotelPane = loader.load();
 
             AddHotelController controller = loader.getController();
             controller.setMainApp(this);
@@ -142,9 +149,31 @@ public class MainApp extends Application {
 
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Choose a room");
+            dialogStage.setTitle("Add a hotel");
             dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(roomPane);
+            Scene scene = new Scene(addHotelPane);
+            dialogStage.setScene(scene);
+
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showAddRoomPage(String ownerName) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getClassLoader().getResource("view/add-room.fxml"));
+            AnchorPane addRoomPane = loader.load();
+
+            AddRoomController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setOwnerName(ownerName);
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add a room");
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(addRoomPane);
             dialogStage.setScene(scene);
 
             dialogStage.showAndWait();
@@ -155,6 +184,6 @@ public class MainApp extends Application {
 
     @Override
     public void stop() throws Exception {
-        // stop
+        // stop the planet
     }
 }

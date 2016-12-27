@@ -3,24 +3,15 @@ package controller;
 import dao.UserDao;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.MainApp;
-import org.springframework.stereotype.Component;
 
-@Component
 public class LoginController {
     @FXML
     private AnchorPane anchorPane;
-    @FXML
-    private Button submitButton;
-    @FXML
-    private Button exitButton;
-    @FXML
-    private Button registerButton;
     @FXML
     private TextField loginField;
     @FXML

@@ -2,32 +2,43 @@ package dao;
 
 import util.DataSourceUtil;
 
+import javax.sql.DataSource;
 import java.sql.*;
 
 public class UserDao {
+
+    public UserDao() {
+        ds = DataSourceUtil.getDataSource();
+    }
+
+    private DataSource ds;
+
     public boolean checkUser(String login, String password) {
-        try (Connection conn = DataSourceUtil.getDataSource().getConnection()) {
+        try (Connection conn = ds.getConnection()) {
             try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT CUST_PASS FROM Customers WHERE CUST_EMAIL = ?")) {
+                    "SELECT CUSTOMERS.CUST_PASS " +
+                            "FROM Customers " +
+                            "WHERE CUSTOMERS.CUST_EMAIL = ?")) {
                 ps.setString(1, login);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (!rs.next()) {
                         return false;
                     }
                     do {
-                        return password.equals(rs.getString("cust_pass"));
+                        return password.equals(rs.getString("CUST_PASS"));
                     } while (rs.next());
                 }
 
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(e);
         }
         return false;
     }
 
     public boolean registerUser(String login, String name, String password, boolean isOwner) {
-        try (Connection conn = DataSourceUtil.getDataSource().getConnection()) {
+        try (Connection conn = ds.getConnection()) {
             conn.setAutoCommit(false);
 
             try (PreparedStatement ps = conn.prepareStatement(
@@ -69,7 +80,7 @@ public class UserDao {
     }
 
     public boolean isOwner(String login) {
-        try (Connection conn = DataSourceUtil.getDataSource().getConnection()) {
+        try (Connection conn = ds.getConnection()) {
             try (PreparedStatement ps = conn.prepareStatement(
                     "SELECT OWNER_EMAIL FROM OWNERS WHERE OWNER_EMAIL = ?")) {
                 ps.setString(1, login);

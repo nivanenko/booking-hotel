@@ -1,9 +1,21 @@
 package model;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable {
+    private int id;
     private String description;
     private int capacity;
     private int price;
+    private int hotelId;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
@@ -27,5 +39,13 @@ public class Room {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
     }
 }

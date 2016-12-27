@@ -9,8 +9,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.MainApp;
+import model.Booking;
 import model.Hotel;
-import model.Room;
+import org.apache.commons.lang3.text.WordUtils;
 import util.CommonUtil;
 
 import java.sql.Date;
@@ -21,7 +22,7 @@ public class CustomerController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
-    private Label nameLabel;
+    private Label customerName;
 
     // Search tab
     @FXML
@@ -33,14 +34,32 @@ public class CustomerController {
     @FXML
     private TextField guestField;
     @FXML
+    // Hotel/room table
     private TableView<Hotel> hotelTable;
     @FXML
-    private TableColumn<Hotel, String> nameColumn;
+    private TableColumn<Hotel, String> nameHotelColumn;
     @FXML
     private TableColumn<Hotel, String> descColumn;
     @FXML
-    private TableColumn<Hotel, Integer> priceColumn;
+    private TableColumn<Hotel, Integer> priceHotelColumn;
     private ObservableList<Hotel> hotelData;
+
+    // Booking table
+    @FXML
+    private TableView<Booking> bookingTable;
+    @FXML
+    private TableColumn<Booking, String> hotelBookNameColumn;
+    @FXML
+    private TableColumn<Booking, Date> dateInColumn;
+    @FXML
+    private TableColumn<Booking, Date> dateOutColumn;
+    @FXML
+    private TableColumn<Booking, Integer> priceBookingColumn;
+    private ObservableList<Booking> bookingData;
+
+    private Date dateIn;
+    private Date dateOut;
+    private ArrayList<Booking> bookings;
 
     private Stage dialogStage;
     private MainApp mainApp;
@@ -49,11 +68,11 @@ public class CustomerController {
     @FXML
     public void initialize() {
         hotelDao = new HotelDao();
-        hotelData = FXCollections.observableArrayList();
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("hotelName"));
+        hotelData = FXCollections.observableArrayList();
+        nameHotelColumn.setCellValueFactory(new PropertyValueFactory<>("hotelName"));
         descColumn.setCellValueFactory(new PropertyValueFactory<>("hotelDescription"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("minPrice"));
+        priceHotelColumn.setCellValueFactory(new PropertyValueFactory<>("minPrice"));
 
         hotelTable.setRowFactory(tv -> {
             TableRow<Hotel> row = new TableRow<>();
@@ -61,21 +80,27 @@ public class CustomerController {
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
                     Hotel rowData = row.getItem();
                     String name = rowData.getHotelName();
-                    ArrayList<Room> rooms = hotelDao.retrieveRooms(name);
 
-                    mainApp.showRoomPage(name, hotelDao.retrieveRooms(name));
+                    mainApp.showRoomPage(name, hotelDao.retrieveRooms(name, dateIn, dateOut),
+                            dateIn, dateOut, customerName.getText());
                 }
             });
             return row;
         });
+
+        bookingData = FXCollections.observableArrayList();
+        hotelBookNameColumn.setCellValueFactory(new PropertyValueFactory<>("hotelName"));
+        dateInColumn.setCellValueFactory(new PropertyValueFactory<>("dateIn"));
+        dateOutColumn.setCellValueFactory(new PropertyValueFactory<>("dateOut"));
+        priceBookingColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
-    public void setNameLabel(String name) {
-        nameLabel.setText(name);
+    public void setCustomerName(String name) {
+        customerName.setText(name);
     }
 
     @FXML
@@ -97,17 +122,66 @@ public class CustomerController {
     @FXML
     private void handleSearchButton() {
         if (isInputValid()) {
-            Date fromDateSQL = Date.valueOf(fromDate.getValue());
-            Date toDateSQL = Date.valueOf(toDate.getValue());
-            ArrayList<Hotel> hotels = hotelDao.searchHotel(cityTextField.getText(),
-                    fromDateSQL, toDateSQL, Integer.parseInt(guestField.getText()));
-
-            for (Hotel hotel : hotels) {
-                hotelData.add(hotel);
-            }
-
+            hotelData.clear();
             hotelTable.setItems(hotelData);
+
+            dateIn = Date.valueOf(fromDate.getValue());
+            dateOut = Date.valueOf(toDate.getValue());
+            ArrayList<Hotel> hotels = hotelDao.searchHotel(WordUtils.capitalize(cityTextField.getText()),
+                    Integer.parseInt(guestField.getText()));
+
+            if (hotels != null) {
+                for (Hotel hotel : hotels) {
+                    hotelData.add(hotel);
+                }
+                hotelTable.setItems(hotelData);
+            }
         }
+    }
+
+    @FXML
+    private void handleRefreshBookingButton() {
+        bookingData.clear();
+        bookingTable.setItems(bookingData);
+        bookings = hotelDao.retrieveBooking(customerName.getText());
+
+        if (bookings != null) {
+            for (Booking booking : bookings) {
+                bookingData.add(booking);
+            }
+            bookingTable.setItems(bookingData);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.initOwner(dialogStage);
+            alert.setTitle("Bookings");
+            alert.setHeaderText("You do not have any booking yet");
+            alert.setContentText("Please, make a booking.");
+
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleDiscardBookingButton() {
+
+    }
+
+    @FXML
+    private void handleCustomButton() {
+        ArrayList<Hotel> hotels = hotelDao.getAllHotels();
+        String hotelString = "";
+
+        for (Hotel hotel : hotels) {
+            hotelString += hotel.getHotelAddress() + "\n\n";
+        }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initOwner(dialogStage);
+        alert.setTitle("Hotels");
+        alert.setHeaderText("SELECT HOTEL_ADDRESS FROM Hotels;");
+        alert.setContentText(hotelString);
+
+        alert.showAndWait();
     }
 
     /**
@@ -127,10 +201,14 @@ public class CustomerController {
         if (toDate.getValue() == null) {
             errorMessage += "Date to is not valid!\n";
         }
-        if (Date.valueOf(toDate.getValue()).before(Date.valueOf(fromDate.getValue()))) {
+        if (toDate.getValue() == null || fromDate.getValue() == null) {
+            errorMessage += "Dates are not valid!\n";
+        } else if (Date.valueOf(toDate.getValue()).before(Date.valueOf(fromDate.getValue()))
+                && !Date.valueOf(fromDate.getValue()).before(new java.util.Date())) {
             errorMessage += "Dates are not valid!\n";
         }
-        if (guestField.getText() == null || !CommonUtil.isNumeric(guestField.getText())) {
+
+        if (guestField.getText() == null || guestField.getText().length() < 1 || !CommonUtil.isNumeric(guestField.getText())) {
             errorMessage += "Guests is not valid!\n";
         }
 

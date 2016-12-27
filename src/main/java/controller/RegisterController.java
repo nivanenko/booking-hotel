@@ -45,10 +45,6 @@ public class RegisterController {
         this.mainApp = mainApp;
     }
 
-    public void setDialogStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
-    }
-
     @FXML
     private void handleCancelButton() {
         dialogStage = (Stage) anchorPane.getScene().getWindow();

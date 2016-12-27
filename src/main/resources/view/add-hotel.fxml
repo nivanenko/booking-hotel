@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:controller="controller.AddHotelController" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="341.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddHotelController">
    <children>
       <VBox layoutX="96.0" layoutY="59.0" spacing="20.0">
          <children>
-            <TextField fx:id="nameField"/>
-            <TextField fx:id="cityField"/>
-            <TextField fx:id="addressField"/>
-            <TextField fx:id="descField"/>
+            <TextField fx:id="nameField" />
+            <TextField fx:id="cityField" />
+            <TextField fx:id="addressField" />
+            <TextField fx:id="descField" />
          </children>
       </VBox>
       <VBox layoutX="25.0" layoutY="63.0" spacing="28.0">
@@ -25,8 +25,8 @@
             <Label text="Description" />
          </children>
       </VBox>
-      <Button onAction="#handleSubmitButton" defaultButton="true" layoutX="268.0" layoutY="271.0" mnemonicParsing="false" text="Confirm" />
-      <Button onAction="#handleCancelButton" cancelButton="true" layoutX="14.0" layoutY="271.0" mnemonicParsing="false" text="Cancel" />
+      <Button defaultButton="true" layoutX="268.0" layoutY="271.0" mnemonicParsing="false" onAction="#handleSubmitButton" text="Confirm" />
+      <Button cancelButton="true" layoutX="14.0" layoutY="271.0" mnemonicParsing="false" onAction="#handleCancelButton" text="Cancel" />
       <Label layoutX="113.0" layoutY="14.0" text="Add a new hotel">
          <font>
             <Font size="16.0" />

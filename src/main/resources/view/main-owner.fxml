@@ -10,55 +10,65 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OwnerController">
-   <children>
-      <TabPane layoutY="57.0" prefHeight="345.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
-         <tabs>
-            <Tab text="My hotels">
-               <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <TableView layoutY="51.0" prefHeight="265.0" prefWidth="600.0">
-                          <columns>
-                            <TableColumn prefWidth="75.0" text="Hotel name" />
-                            <TableColumn prefWidth="75.0" text="Description" />
-                              <TableColumn prefWidth="75.0" text="Rooms" />
-                          </columns>
-                        </TableView>
-                        <HBox layoutX="14.0" layoutY="14.0" spacing="20.0">
-                           <children>
-                              <Button defaultButton="true" mnemonicParsing="false" onAction="#handleHotelRefreshButton" text="Refresh" />
-                              <Button mnemonicParsing="false" onAction="#handleAddHotelButton" text="Add hotel" />
-                              <Button mnemonicParsing="false" onAction="#handleAddRoomButton" text="Add room" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-            <Tab text="Manage bookings">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView layoutY="51.0" prefHeight="265.0" prefWidth="600.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="Hotel name" />
-                              <TableColumn prefWidth="75.0" text="Dates" />
-                              <TableColumn prefWidth="75.0" text="Price" />
-                           </columns>
-                        </TableView>
-                        <Button defaultButton="true" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Refresh" />
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-         </tabs>
-      </TabPane>
-      <Button layoutX="525.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSignOutButton" text="Sign out" />
-      <HBox layoutX="14.0" layoutY="18.0" />
-      <Label layoutX="251.0" layoutY="18.0" text="Booking hotel v0.1" />
-      <Accordion layoutX="98.0" layoutY="-2.0" />
-      <Label layoutX="14.0" layoutY="18.0" text="User: " />
-      <Label fx:id="nameLabel" layoutX="44.0" layoutY="18.0" text="email" />
-   </children>
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OwnerController">
+    <children>
+        <TabPane layoutY="57.0" prefHeight="345.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="My hotels">
+                    <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="hotelTable" layoutY="51.0" prefHeight="265.0" prefWidth="600.0">
+                                    <columns>
+                                        <TableColumn fx:id="hotelNameColumn" prefWidth="75.0" text="Hotel name"/>
+                                        <TableColumn fx:id="hotelDescColumn" prefWidth="75.0" text="Description"/>
+                                        <TableColumn fx:id="roomsQuantityColumn" prefWidth="105.0"
+                                                     text="Rooms quantity"/>
+                                        <TableColumn fx:id="hotelCityColumn" prefWidth="95.0" text="City"/>
+                                    </columns>
+                                </TableView>
+                                <HBox layoutX="14.0" layoutY="14.0" spacing="20.0">
+                                    <children>
+                                        <Button defaultButton="true" mnemonicParsing="false"
+                                                onAction="#handleHotelRefreshButton" text="Refresh"/>
+                                        <Button mnemonicParsing="false" onAction="#handleAddHotelButton"
+                                                text="Add hotel"/>
+                                        <Button mnemonicParsing="false" onAction="#handleAddRoomButton"
+                                                text="Add room"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Manage bookings">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="bookingTable" layoutY="51.0" prefHeight="265.0" prefWidth="600.0">
+                                    <columns>
+                                        <TableColumn fx:id="hotelBookNameColumn" prefWidth="75.0" text="Hotel name"/>
+                                        <TableColumn fx:id="roomIdColumn" prefWidth="75.0" text="Room, #"/>
+                                        <TableColumn fx:id="dateInColumn" prefWidth="75.0" text="Check in"/>
+                                        <TableColumn fx:id="dateOutColumn" prefWidth="75.0" text="Check out"/>
+                                        <TableColumn fx:id="priceBookingColumn" prefWidth="75.0" text="Price, €"/>
+                                    </columns>
+                                </TableView>
+                                <Button onAction="#handleBookingRefreshButton" defaultButton="true" layoutX="14.0" layoutY="14.0" mnemonicParsing="false"
+                                        text="Refresh"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <Button layoutX="525.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSignOutButton" text="Sign out"/>
+        <HBox layoutX="14.0" layoutY="18.0"/>
+        <Label layoutX="251.0" layoutY="18.0" text="Booking hotel v0.1"/>
+        <Accordion layoutX="98.0" layoutY="-2.0"/>
+        <Label layoutX="14.0" layoutY="18.0" text="User: "/>
+        <Label fx:id="ownerNameLabel" layoutX="44.0" layoutY="18.0" text="email"/>
+    </children>
 </AnchorPane>
