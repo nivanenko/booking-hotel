@@ -18,13 +18,11 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class CustomerController {
-    // Common items
     @FXML
     private AnchorPane anchorPane;
     @FXML
     private Label customerName;
 
-    // Search tab
     @FXML
     private TextField cityTextField;
     @FXML
@@ -164,24 +162,6 @@ public class CustomerController {
     @FXML
     private void handleDiscardBookingButton() {
 
-    }
-
-    @FXML
-    private void handleCustomButton() {
-        ArrayList<Hotel> hotels = hotelDao.getAllHotels();
-        String hotelString = "";
-
-        for (Hotel hotel : hotels) {
-            hotelString += hotel.getHotelAddress() + "\n\n";
-        }
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.initOwner(dialogStage);
-        alert.setTitle("Hotels");
-        alert.setHeaderText("SELECT HOTEL_ADDRESS FROM Hotels;");
-        alert.setContentText(hotelString);
-
-        alert.showAndWait();
     }
 
     /**

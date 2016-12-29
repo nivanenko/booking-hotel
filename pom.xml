@@ -85,7 +85,6 @@
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc7</artifactId>
             <version>11</version>
-            <!-- mvn install:install-file -Dfile=C:\lang\ojdbc7.jar -DgroupId=com.oracle -DartifactId=ojdbc7 -Dpackaging=jar -Dversion=11 -->
         </dependency>
     </dependencies>
 

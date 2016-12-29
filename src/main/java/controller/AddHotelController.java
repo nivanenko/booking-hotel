@@ -28,7 +28,6 @@ public class AddHotelController {
     @FXML
     public void initialize() {
         ownerDao = new OwnerDao();
-
     }
 
     public void setMainApp(MainApp mainApp) {

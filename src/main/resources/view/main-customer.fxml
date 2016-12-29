@@ -15,7 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerController">
     <children>
         <TabPane layoutY="57.0" prefHeight="345.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -23,38 +25,43 @@
                     <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                             <children>
-                                <Separator layoutX="219.0" orientation="VERTICAL" prefHeight="314.0" prefWidth="7.0" />
-                                <Label layoutX="64.0" layoutY="2.0" prefHeight="25.0" prefWidth="93.0" text="Choose criteria">
+                                <Separator layoutX="219.0" orientation="VERTICAL" prefHeight="314.0" prefWidth="7.0"/>
+                                <Label layoutX="64.0" layoutY="2.0" prefHeight="25.0" prefWidth="93.0"
+                                       text="Choose criteria">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="14.0"/>
                                     </font>
                                 </Label>
                                 <VBox layoutX="10.0" layoutY="64.0" spacing="23.0">
                                     <children>
-                                        <Label text="City" />
-                                        <Label text="Date from" />
-                                        <Label text="Date to" />
-                                        <Label text="Guests" />
+                                        <Label text="City"/>
+                                        <Label text="Date from"/>
+                                        <Label text="Date to"/>
+                                        <Label text="Guests"/>
                                     </children>
                                 </VBox>
-                                <Separator layoutX="1.0" layoutY="38.0" prefHeight="3.0" prefWidth="219.0" />
+                                <Separator layoutX="1.0" layoutY="38.0" prefHeight="3.0" prefWidth="219.0"/>
                                 <VBox layoutX="72.0" layoutY="60.0" spacing="15.0">
                                     <children>
-                                        <TextField fx:id="cityTextField" prefHeight="25.0" prefWidth="118.0" />
-                                        <DatePicker fx:id="fromDate" prefHeight="25.0" prefWidth="116.0" />
-                                        <DatePicker fx:id="toDate" prefHeight="25.0" prefWidth="117.0" />
-                                        <TextField fx:id="guestField" prefHeight="25.0" prefWidth="118.0" />
+                                        <TextField fx:id="cityTextField" prefHeight="25.0" prefWidth="118.0"/>
+                                        <DatePicker fx:id="fromDate" prefHeight="25.0" prefWidth="116.0"/>
+                                        <DatePicker fx:id="toDate" prefHeight="25.0" prefWidth="117.0"/>
+                                        <TextField fx:id="guestField" prefHeight="25.0" prefWidth="118.0"/>
                                     </children>
                                 </VBox>
-                                <Button defaultButton="true" layoutX="164.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleSearchButton" text="Search" />
-                                <TableView fx:id="hotelTable" layoutX="223.0" layoutY="-2.0" prefHeight="316.0" prefWidth="380.0">
+                                <Button defaultButton="true" layoutX="164.0" layoutY="277.0" mnemonicParsing="false"
+                                        onAction="#handleSearchButton" text="Search"/>
+                                <TableView fx:id="hotelTable" layoutX="223.0" layoutY="-2.0" prefHeight="316.0"
+                                           prefWidth="380.0">
                                     <columns>
-                                        <TableColumn fx:id="nameHotelColumn" prefWidth="75.0" text="Name" />
-                                        <TableColumn fx:id="descColumn" prefWidth="238.0" text="Description" />
-                                        <TableColumn fx:id="priceHotelColumn" minWidth="0.0" prefWidth="59.0" text="Price, €" />
+                                        <TableColumn fx:id="nameHotelColumn" prefWidth="75.0" text="Name"/>
+                                        <TableColumn fx:id="descColumn" prefWidth="238.0" text="Description"/>
+                                        <TableColumn fx:id="priceHotelColumn" minWidth="0.0" prefWidth="59.0"
+                                                     text="Price, €"/>
                                     </columns>
                                 </TableView>
-                                <Button layoutX="15.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleClearButton" text="Clear" />
+                                <Button layoutX="15.0" layoutY="277.0" mnemonicParsing="false"
+                                        onAction="#handleClearButton" text="Clear"/>
                             </children>
                         </AnchorPane>
                     </content>
@@ -65,16 +72,19 @@
                             <children>
                                 <TableView fx:id="bookingTable" layoutY="50.0" prefHeight="265.0" prefWidth="600.0">
                                     <columns>
-                                        <TableColumn fx:id="hotelBookNameColumn" prefWidth="131.0" text="Hotel name" />
-                                        <TableColumn fx:id="dateInColumn" prefWidth="78.0" text="Check in" />
-                                        <TableColumn fx:id="dateOutColumn" minWidth="4.0" prefWidth="111.0" text="Check out" />
-                                        <TableColumn fx:id="priceBookingColumn" prefWidth="65.0" text="Price, €" />
+                                        <TableColumn fx:id="hotelBookNameColumn" prefWidth="131.0" text="Hotel name"/>
+                                        <TableColumn fx:id="dateInColumn" prefWidth="78.0" text="Check in"/>
+                                        <TableColumn fx:id="dateOutColumn" minWidth="4.0" prefWidth="111.0"
+                                                     text="Check out"/>
+                                        <TableColumn fx:id="priceBookingColumn" prefWidth="65.0" text="Price, €"/>
                                     </columns>
                                 </TableView>
                                 <HBox layoutX="14.0" layoutY="14.0" spacing="20.0">
                                     <children>
-                                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleRefreshBookingButton" text="Refresh" />
-                                        <Button mnemonicParsing="false" onAction="#handleDiscardBookingButton" text="Discard selected" />
+                                        <Button defaultButton="true" mnemonicParsing="false"
+                                                onAction="#handleRefreshBookingButton" text="Refresh"/>
+                                        <Button mnemonicParsing="false" onAction="#handleDiscardBookingButton"
+                                                text="Discard selected"/>
                                     </children>
                                 </HBox>
                             </children>
@@ -83,11 +93,10 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <Button layoutX="525.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSignOutButton" text="Sign out" />
-        <Label layoutX="251.0" layoutY="18.0" text="Booking hotel v0.1" />
-        <Accordion layoutX="98.0" layoutY="-2.0" />
-        <Label layoutX="14.0" layoutY="18.0" text="User:  " />
-        <Label fx:id="customerName" layoutX="47.0" layoutY="18.0" text="email" />
-      <Button layoutX="456.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCustomButton" text="Custom" />
+        <Button layoutX="525.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSignOutButton" text="Sign out"/>
+        <Label layoutX="251.0" layoutY="18.0" text="Booking hotel v0.1"/>
+        <Accordion layoutX="98.0" layoutY="-2.0"/>
+        <Label layoutX="14.0" layoutY="18.0" text="User:  "/>
+        <Label fx:id="customerName" layoutX="47.0" layoutY="18.0" text="email"/>
     </children>
 </AnchorPane>

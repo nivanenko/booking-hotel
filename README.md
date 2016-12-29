@@ -1,5 +1,5 @@
 # Booking hotel
-It's JavaFX application for KPI course work.
+It's a JavaFX application for KPI course work.
 
 **Discipline:** Databases &amp; Informational systems 
 

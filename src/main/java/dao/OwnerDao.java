@@ -53,35 +53,77 @@ public class OwnerDao {
 
     public ArrayList<Hotel> retrieveHotels(String ownerName) {
         ArrayList<Hotel> hotels = new ArrayList<>();
+        boolean hasRooms = true;
 
         try (Connection conn = ds.getConnection()) {
             try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT HOTELS.HOTEL_NAME, " +
-                            "HOTELS.HOTEL_DESCRIPTION," +
-                            "HOTELS.HOTEL_CITY, " +
-                            "COUNT(HOTELS.HOTEL_ID) AS ROOMS_QUANTITY " +
+                    "SELECT ROOMS.ROOM_PRICE " +
                             "FROM ROOMS " +
                             "INNER JOIN HOTELS " +
-                            "ON HOTELS.HOTEL_ID = ROOMS.ROOM_HOTEL " +
-                            "INNER JOIN OWNERS " +
-                            "ON OWNERS.OWNER_EMAIL = HOTELS.HOTEL_OWNER " +
-                            "WHERE HOTELS.HOTEL_OWNER = ? " +
-                            "GROUP BY HOTELS.HOTEL_NAME, " +
-                            "HOTELS.HOTEL_DESCRIPTION," +
-                            "HOTELS.HOTEL_CITY")) {
+                            "ON ROOMS.ROOM_HOTEL = HOTELS.HOTEL_ID " +
+                            "WHERE HOTELS.HOTEL_OWNER = ?"
+            )) {
                 ps.setString(1, ownerName);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (!rs.next()) {
-                        return null;
+                        hasRooms = false;
                     }
-                    do {
-                        Hotel hotel = new Hotel();
-                        hotel.setHotelName(rs.getString("HOTEL_NAME"));
-                        hotel.setHotelDescription(rs.getString("HOTEL_DESCRIPTION"));
-                        hotel.setCity(rs.getString("HOTEL_CITY"));
+                }
+            }
+
+            if (hasRooms) {
+                try (PreparedStatement ps = conn.prepareStatement(
+                        "SELECT HOTELS.HOTEL_NAME, " +
+                                "HOTELS.HOTEL_DESCRIPTION," +
+                                "HOTELS.HOTEL_CITY," +
+                                "COUNT(HOTELS.HOTEL_ID) AS ROOMS_QUANTITY " +
+                                "FROM HOTELS " +
+                                "INNER JOIN OWNERS " +
+                                "ON OWNERS.OWNER_EMAIL = HOTELS.HOTEL_OWNER " +
+                                "WHERE HOTELS.HOTEL_OWNER = ? " +
+                                "GROUP BY HOTELS.HOTEL_NAME, " +
+                                "HOTELS.HOTEL_DESCRIPTION," +
+                                "HOTELS.HOTEL_CITY")) {
+                    ps.setString(1, ownerName);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (!rs.next()) {
+                            return null;
+                        }
+                        do {
+                            Hotel hotel = new Hotel();
+                            hotel.setHotelName(rs.getString("HOTEL_NAME"));
+                            hotel.setHotelDescription(rs.getString("HOTEL_DESCRIPTION"));
+                            hotel.setCity(rs.getString("HOTEL_CITY"));
                         hotel.setRoomsQuantity(rs.getInt("ROOMS_QUANTITY"));
-                        hotels.add(hotel);
-                    } while (rs.next());
+                            hotels.add(hotel);
+                        } while (rs.next());
+                    }
+                }
+            } else {
+                try (PreparedStatement ps = conn.prepareStatement(
+                        "SELECT HOTELS.HOTEL_NAME, " +
+                                "HOTELS.HOTEL_DESCRIPTION," +
+                                "HOTELS.HOTEL_CITY " +
+                                "FROM HOTELS " +
+                                "INNER JOIN OWNERS " +
+                                "ON OWNERS.OWNER_EMAIL = HOTELS.HOTEL_OWNER " +
+                                "WHERE HOTELS.HOTEL_OWNER = ? " +
+                                "GROUP BY HOTELS.HOTEL_NAME, " +
+                                "HOTELS.HOTEL_DESCRIPTION," +
+                                "HOTELS.HOTEL_CITY")) {
+                    ps.setString(1, ownerName);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (!rs.next()) {
+                            return null;
+                        }
+                        do {
+                            Hotel hotel = new Hotel();
+                            hotel.setHotelName(rs.getString("HOTEL_NAME"));
+                            hotel.setHotelDescription(rs.getString("HOTEL_DESCRIPTION"));
+                            hotel.setCity(rs.getString("HOTEL_CITY"));
+                            hotels.add(hotel);
+                        } while (rs.next());
+                    }
                 }
             }
         } catch (SQLException e) {

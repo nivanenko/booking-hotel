@@ -7,31 +7,33 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:controller="controller.AddRoomController" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="264.0" prefWidth="263.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="73.0" layoutY="14.0" text="Add a new room">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <VBox layoutX="14.0" layoutY="56.0" spacing="28.0">
-         <children>
-            <Label text="Hotel name" />
-            <Label text="Description" />
-            <Label text="Capacity" />
-            <Label text="Price" />
-         </children>
-      </VBox>
-      <VBox layoutX="81.0" layoutY="52.0" spacing="20.0">
-         <children>
-            <TextField fx:id="hotelNameField" />
-            <TextField fx:id="descField"/>
-            <TextField fx:id="capacityField"/>
-            <TextField fx:id="priceField" />
-         </children>
-      </VBox>
-      <Button onAction="#handleCancelButton" cancelButton="true" layoutX="14.0" layoutY="225.0" mnemonicParsing="false" text="Cancel" />
-      <Button onAction="#handleSubmitButton" defaultButton="true" layoutX="211.0" layoutY="225.0" mnemonicParsing="false" text="Add" />
-   </children>
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="264.0" prefWidth="263.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddRoomController">
+    <children>
+        <Label layoutX="73.0" layoutY="14.0" text="Add a new room">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <VBox layoutX="10.0" layoutY="79.0" spacing="28.0">
+            <children>
+                <Label text="Description" />
+                <Label text="Capacity" />
+                <Label text="Price" />
+            </children>
+        </VBox>
+        <VBox layoutX="73.0" layoutY="75.0" spacing="20.0">
+            <children>
+                <TextField fx:id="descField" />
+                <TextField fx:id="capacityField" />
+                <TextField fx:id="priceField" />
+            </children>
+        </VBox>
+        <Button cancelButton="true" layoutX="14.0" layoutY="225.0" mnemonicParsing="false" onAction="#handleCancelButton" text="Cancel" />
+        <Button defaultButton="true" layoutX="211.0" layoutY="225.0" mnemonicParsing="false" onAction="#handleSubmitButton" text="Add" />
+        <Label fx:id="hotelNameLabel" layoutX="113.0" layoutY="39.0" text="Label">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+    </children>
 </AnchorPane>

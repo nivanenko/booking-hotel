@@ -56,7 +56,8 @@
                                         <TableColumn fx:id="priceBookingColumn" prefWidth="75.0" text="Price, €"/>
                                     </columns>
                                 </TableView>
-                                <Button onAction="#handleBookingRefreshButton" defaultButton="true" layoutX="14.0" layoutY="14.0" mnemonicParsing="false"
+                                <Button onAction="#handleBookingRefreshButton" defaultButton="true" layoutX="14.0"
+                                        layoutY="14.0" mnemonicParsing="false"
                                         text="Refresh"/>
                             </children>
                         </AnchorPane>

@@ -4,10 +4,7 @@ import dao.OwnerDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -67,6 +64,25 @@ public class OwnerController {
         roomsQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("roomsQuantity"));
         hotelCityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
 
+        hotelTable.setRowFactory(tv -> {
+            TableRow<Hotel> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    Hotel rowData = row.getItem();
+                    String name = rowData.getHotelName();
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.initOwner(dialogStage);
+                    alert.setTitle("Rooms");
+                    alert.setHeaderText("Hotel " + name);
+                    alert.setContentText("You will be able to view and manage your rooms soon.");
+
+                    alert.showAndWait();
+                }
+            });
+            return row;
+        });
+
         bookingData = FXCollections.observableArrayList();
         hotelBookNameColumn.setCellValueFactory(new PropertyValueFactory<>("hotelName"));
         roomIdColumn.setCellValueFactory(new PropertyValueFactory<>("roomId"));
@@ -97,7 +113,7 @@ public class OwnerController {
 
             hotelTable.setItems(hotelData);
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(dialogStage);
             alert.setTitle("Hotels");
             alert.setHeaderText("You do not have any hotel yet");
@@ -109,12 +125,24 @@ public class OwnerController {
 
     @FXML
     private void handleAddHotelButton() {
-        mainApp.showAddHotelPage(ownerNameLabel.getText());
+            mainApp.showAddHotelPage(ownerNameLabel.getText());
     }
 
     @FXML
     private void handleAddRoomButton() {
-        mainApp.showAddRoomPage(ownerNameLabel.getText());
+        if (!(hotelTable.getSelectionModel().getSelectedItem() == null)) {
+            mainApp.showAddRoomPage(ownerNameLabel.getText(),
+                    hotelTable.getSelectionModel().getSelectedItem().getHotelName());
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(dialogStage);
+            alert.setTitle("Error!");
+            alert.setHeaderText("No hotel selected");
+            alert.setContentText("Please, select a hotel.");
+
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -129,7 +157,7 @@ public class OwnerController {
             }
             bookingTable.setItems(bookingData);
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(dialogStage);
             alert.setTitle("Bookings");
             alert.setHeaderText("You do not have booked room yet.");

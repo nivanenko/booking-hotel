@@ -3,6 +3,7 @@ package controller;
 import dao.OwnerDao;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -13,7 +14,7 @@ public class AddRoomController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
-    private TextField hotelNameField;
+    private Label hotelNameLabel;
     @FXML
     private TextField descField;
     @FXML
@@ -25,10 +26,12 @@ public class AddRoomController {
     private MainApp mainApp;
     private OwnerDao ownerDao;
     private String ownerName;
+    private String hotelName;
 
     @FXML
     public void initialize() {
         ownerDao = new OwnerDao();
+
 
     }
 
@@ -40,10 +43,15 @@ public class AddRoomController {
         this.ownerName = ownerName;
     }
 
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+        hotelNameLabel.setText(hotelName);
+    }
+
     @FXML
     private void handleSubmitButton() {
         if (isInputValid()) {
-            if (ownerDao.addRoom(ownerName, hotelNameField.getText(), descField.getText(),
+            if (ownerDao.addRoom(ownerName, hotelName, descField.getText(),
                     Integer.parseInt(capacityField.getText()),
                     Integer.parseInt(priceField.getText()))) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -82,9 +90,6 @@ public class AddRoomController {
     private boolean isInputValid() {
         String errorMessage = "";
 
-        if (hotelNameField.getText() == null || hotelNameField.getText().length() < 2) {
-            errorMessage += "Hotel name is not valid!\n";
-        }
         if (descField.getText() == null || descField.getText().length() < 2) {
             errorMessage += "Description is not valid!\n";
         }

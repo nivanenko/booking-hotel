@@ -7,28 +7,21 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Room;
-import util.DataSourceUtil;
 
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 
 public class MainApp extends Application {
-
     private Stage primaryStage;
     private AnchorPane rootLayout;
-    private DataSource ds;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ds = DataSourceUtil.getDataSource();
-
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Booking hotel");
 
-//        showLoginPage();
-        showCustomerPage("firstcustomer@gmail.com");
+        showLoginPage();
     }
 
 
@@ -160,7 +153,7 @@ public class MainApp extends Application {
         }
     }
 
-    public void showAddRoomPage(String ownerName) {
+    public void showAddRoomPage(String ownerName, String hotelName) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("view/add-room.fxml"));
@@ -169,6 +162,7 @@ public class MainApp extends Application {
             AddRoomController controller = loader.getController();
             controller.setMainApp(this);
             controller.setOwnerName(ownerName);
+            controller.setHotelName(hotelName);
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Add a room");
